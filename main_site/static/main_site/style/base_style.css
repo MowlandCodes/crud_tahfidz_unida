@@ -1,0 +1,74 @@
+/* Poppins Font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar {
+    width: 20%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: #1b2f3c;
+    padding: 20px;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.menu-icon {
+    font-size: 40px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #fff;
+}
+
+.logo-icons {
+    width: 75%;
+}
+
+.sidebar-menu {
+    margin-top: 35%;
+}
+
+.menu-container {
+    padding: px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 55px;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 0 0 12%;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    font-size: 25px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.nav-item:hover {
+    background-color: #258171;
+    box-shadow: 0px 10px 10px 0 rgba(0, 0, 0, 0.1);
+}
+}
+
