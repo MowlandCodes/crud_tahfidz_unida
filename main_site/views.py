@@ -4,7 +4,7 @@ from .forms import LoginForm, SignupForm, SetoranHafalan
 
 # Create your views here.
 def index(response):
-    return redirect("dashboard")
+    return redirect("login")
 
 def dashboard(response):
     return render(response, "main_site/dashboard.html", {})
