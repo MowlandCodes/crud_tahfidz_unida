@@ -4,5 +4,6 @@ from . import views
 
 # View Routes
 urlpatterns = [
-    path("", views.index, name="Index Page"),
+    path("", views.index, name="index"),
+    path("dashboard", views.dasboard, name="dashboard"),
 ]

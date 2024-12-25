@@ -8,7 +8,7 @@ class User(models.Model):
     password = models.CharField(max_length=150)
 
     def __str__(self):
-        return self.name
+        return self.full_name
 
 class Hafalan(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -16,4 +16,4 @@ class Hafalan(models.Model):
     ayat = models.IntegerField()
 
     def __str__(self):
-        return f"{self.surat} : {self.ayat}"
+        return f"{self.user.full_name} ------------> {self.surat} : {self.ayat}"
