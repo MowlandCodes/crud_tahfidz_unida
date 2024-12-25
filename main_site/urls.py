@@ -5,5 +5,5 @@ from . import views
 # View Routes
 urlpatterns = [
     path("", views.index, name="index"),
-    path("dashboard", views.dasboard, name="dashboard"),
+    path("dashboard", views.dashboard, name="dashboard"),
 ]
