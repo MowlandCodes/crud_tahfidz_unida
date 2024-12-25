@@ -1,14 +1,16 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}{% endblock %}</title>
-        <link href="#" rel="stylesheet">
+        <link href="{% static 'main_site/style/base_style.css' %}" rel="stylesheet">
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     </head>
     <body>
-        <nav class="navbar">
+        <nav class="sidebar">
+            <i class='bx bx-menu'></i>
             <div class="logo">
                 <img src="#" alt="Logo UNIDA" class="logo-icons">
                 <a href="#">Tahfidz UNIDA</a>
