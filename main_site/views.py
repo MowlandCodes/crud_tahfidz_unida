@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .forms import LoginForm, SignupForm, SetoranHafalan
 
 # Create your views here.
 def index(response):
