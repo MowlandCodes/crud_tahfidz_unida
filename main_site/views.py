@@ -15,8 +15,12 @@ def admin_login(request): # Redirecting to login page
     return redirect("/login")
 
 def dashboard(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and not (request.user.is_staff or request.user.is_superuser): # Allow only authenticated user to access dashboard and Not admin or staff
         return render(request, "main_site/dashboard.html", {})
+    
+    elif request.user.is_staff or request.user.is_superuser: # Preventing admin to touch user Dashboard page
+        return redirect("/admin")
+
     else:
         return redirect("/login")
 
