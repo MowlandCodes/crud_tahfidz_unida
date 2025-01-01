@@ -1,74 +1,130 @@
 /* Poppins Font from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+:root {
+    --base-clr: #123524;
+    --secondary-clr: #3e7b27;
+    --accent-clr: #efe3b2;
+    --text-clr: #eee;
+    --secondary-text-clr: #eeeddd;
+    --background-clr: #fff;
+    --line-color: #eeefff;
+}
+
 * {
     font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
 }
 
+html {
+    line-height: 1.5rem;
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background-color: var(--background-clr);
+    color: var(--text-clr);
+    dipslay: grid;
+    grid-template-columns: auto 1fr;
+}
+
 .sidebar {
-    width: 20%;
-    height: 100%;
-    position: fixed;
-    left: 0;
+    box-sizing: border-box;
+    padding: 5px 1em;
+    width: 270px;
+    height: 100vh;
+    background-color: var(--base-clr);
+    color: var(--secondary-text-clr);
+    border-right: 1px solid var(--line-color);
+    position: sticky;
     top: 0;
-    background-color: #1b2f3c;
-    padding: 20px;
+    align-self: start;
+    transition: 350ms ease-in-out;
+    overflow: hidden;
+    text-wrap: nowrap;
 }
 
-.sidebar-header {
+.sidebar.close{
+    padding: 3px;
+    width: 60px;
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar > ul > li:first-child {
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px 0 35px 0;
+
+    .logo-unida {
+        width: auto;
+        height: 3.3em;
+        cursor: pointer;
+        transition: 250ms ease-in-out;
+    }
+}
+
+.sidebar ul li.active a{
+    color: var(--accent-clr);
+}
+
+.sidebar a {
+    border-radius: .5em;
+    padding: .85em;
+    color: var(--text-clr);
+    text-decoration: none;
     display: flex;
     align-items: center;
-    gap: 20px;
-    justify-content: space-between;
+    gap: .9em;
+    margin-bottom: 1em;
+    transition: 250ms ease;
 }
 
-.menu-icon {
-    font-size: 40px;
+.sidebar a span {
+    flex-grow: 1;
+}
+
+.sidebar a:hover {
+    background-color: var(--secondary-clr);
+    color: var(--text-clr);
+}
+
+#toggle-btn {
+    margin-left: auto;
+    margin-right: 0.2em;
+    padding: 1em;
+    border: none;
+    border-radius: .5em;
+    background-color: transparent;
+    color: var(--text-clr);
     cursor: pointer;
-    text-decoration: none;
-    color: #fff;
+    transition: 250ms ease-in-out;
+    i {
+        font-size: 1.5em;
+        transition: rotate 250ms ease;
+    }
 }
 
-.logo-icons {
-    width: 75%;
+#toggle-btn:hover {
+    background-color: var(--secondary-clr);
+    color: var(--text-clr);
 }
 
-.sidebar-menu {
-    margin-top: 35%;
+.rotate {
+    margin-left: 0px;
+    rotate: -180deg;
 }
 
-.menu-container {
-    padding: px;
+.hidden {
+    visibility: hidden;
 }
 
-.menu {
-    display: flex;
-    flex-direction: column;
-    gap: 55px;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 0 0 0 12%;
+.nav-link {
+    transition: 250ms ease-in-out;
 }
-
-.nav-item {
-    display: flex;
-    align-items: center;
-    gap: 25px;
-    text-decoration: none;
-    color: #fff;
-    font-weight: 500;
-    font-size: 25px;
-    cursor: pointer;
-    transition: 0.2s ease;
-    padding: 10px;
-    border-radius: 10px;
-}
-
-.nav-item:hover {
-    background-color: #258171;
-    box-shadow: 0px 10px 10px 0 rgba(0, 0, 0, 0.1);
-}
-
-
