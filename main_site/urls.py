@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 
 from . import views
 
@@ -10,4 +10,5 @@ urlpatterns = [
     path("login", views.login_page, name="login_page"),
     path("signup", views.signup, name="signup"),
     path("logout", views.logout_view, name="logout_view"),
+    re_path("^admin/login/$", views.admin_login, name="admin_login"),
 ]

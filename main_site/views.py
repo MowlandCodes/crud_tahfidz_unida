@@ -11,6 +11,9 @@ from django_ratelimit.decorators import ratelimit
 def index(request):
     return redirect("/login")
 
+def admin_login(request): # Redirecting to login page
+    return redirect("/login")
+
 def dashboard(request):
     if request.user.is_authenticated:
         return render(request, "main_site/dashboard.html", {})
@@ -32,7 +35,10 @@ def login_page(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect("dashboard")
+            if request.user.is_staff: # Check if user is a staff or a Super User
+                return redirect("/admin")
+            else:
+                return redirect("/dashboard") # Page for Students
         else:
             messages.error(request, "Invalid username or password")
 

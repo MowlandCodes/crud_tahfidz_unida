@@ -18,23 +18,22 @@
             {% csrf_token %}
             <h1>{% block form-title %}Tahfidz Login{% endblock %}</h1>
             {% block form-content %}
-
-            <div class="input-box">
-                <input type="text" name="username" value="" placeholder="Username" required>
-                <i class='bx bx-user'></i>
-            </div>
-            <div class="input-box">
-                <input type="password" name="password" value="" placeholder="Password" required>
-                <i class='bx bx-lock-alt'></i>
-            </div>
-
-            <div class="remember-forgot">
-                <div class="remember-check-box">
-                    <input type="checkbox" name="remember" value="True" id="remember">
-                    <label for="remember">Remember me</label>
+                <div class="input-box">
+                    <input type="text" name="username" value="" placeholder="Username" required>
+                    <i class='bx bx-user'></i>
                 </div>
-                <a href="#">Forgot Password?</a>
-            </div>
+                <div class="input-box">
+                    <input type="password" name="password" value="" placeholder="Password" required>
+                    <i class='bx bx-lock-alt'></i>
+                </div>
+
+                <div class="remember-forgot">
+                    <div class="remember-check-box">
+                        <input type="checkbox" name="remember" value="True" id="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="#">Forgot Password?</a>
+                </div>
             {% endblock %}
 
             {%if messages%} 
@@ -48,7 +47,9 @@
 
             <button type="submit" class="btn">{% block button-title %}Login{% endblock %}</button>
             <div class="login-register">
-                {% block login-register %}<p>Don't have an account? <a href="/signup">Register</a></p>{% endblock %}
+                {% block login-register %}
+                    <p>Don't have an account? <a href="/signup">Register</a></p>
+                {% endblock %}
             </div>
         </form>
     </div>
