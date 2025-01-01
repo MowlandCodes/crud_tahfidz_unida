@@ -41,10 +41,8 @@ def login_page(request):
 def signup(request):
     return render(request, "main_site/signup.html", {})
 
-
 def hafalan(request):
     return render(request, "main_site/crud_hafalan.html", {})
-
 
 def logout_view(request):
     logout(request)
