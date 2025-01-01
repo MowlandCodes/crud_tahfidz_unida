@@ -38,6 +38,11 @@ def login_page(request):
             if request.user.is_staff: # Check if user is a staff or a Super User
                 return redirect("/admin")
             else:
+                if remember == "True": # If remember is checked, set remember to True
+                    request.session.set_expiry(60 * 60 * 24 * 7 * 2) # Will remember the user for 2 weeks
+                else:
+                    request.session.set_expiry(0) # Expire when the browser is closed
+
                 return redirect("/dashboard") # Page for Students
         else:
             messages.error(request, "Invalid username or password")
