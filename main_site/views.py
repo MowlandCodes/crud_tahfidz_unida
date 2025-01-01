@@ -18,7 +18,7 @@ def dashboard(request):
         return redirect("/login")
 
 # Limiting login attempts to prevent Brute Force Attack
-@ratelimit(key='ip', rate='15/m', block=True)
+@ratelimit(key='ip', rate='7/m', block=True)
 def login_page(request):
     csrf_token = get_token(request)
     if request.user.is_authenticated: # Preventing the user to touch login page after successfully logged in
