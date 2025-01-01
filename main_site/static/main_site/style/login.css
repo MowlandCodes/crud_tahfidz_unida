@@ -136,3 +136,15 @@ body {
 .login-register a:hover {
     text-decoration: underline;
 }
+
+.alert-error {
+    color: #f22163;
+    font-size: 14px;
+    font-weight: 400;
+    margin: 5px 0;
+    border-radius: 10px;
+    border: 2px solid #f22163;
+    padding: 10px;
+    background-color: #eea5a5;
+    cursor: pointer;
+}
