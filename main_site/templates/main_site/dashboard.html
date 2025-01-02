@@ -1,3 +1,22 @@
 {% extends "main_site/base.html" %}
+{% load static %}
 
+{% block content %}
+    <link href="{% static 'main_site/style/dashboard.css' %}" rel="stylesheet">
+    <script>
+        const label_mingguan = {{ weekly_labels|safe }};
+        const data_mingguan = {{ weekly_data|safe }};
+        const label_bulanan = {{ monthly_labels|safe }};
+        const data_bulanan = {{ monthly_data|safe }};
+    </script>
 
+    <div class="setoran-perminggu">
+        <canvas class="chart-setoran-perminggu" id="chart-setoran-mingguan" role="img"></canvas>
+    </div>
+    <div class="setoran-perbulan">
+        <canvas class="chart-setoran-perbulan" id="chart-setoran-bulanan" role="img"></canvas>
+    </div>
+
+    <script src="{% static 'main_site/script/dashboard.js' %}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script> <!-- Added plugins to make charts -->
+{% endblock %}

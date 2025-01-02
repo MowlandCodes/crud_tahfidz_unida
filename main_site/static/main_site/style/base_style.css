@@ -27,7 +27,7 @@ body {
     min-height: 100dvh;
     background-color: var(--background-clr);
     color: var(--text-clr);
-    dipslay: grid;
+    display: grid;
     grid-template-columns: auto 1fr;
 }
 
@@ -127,4 +127,11 @@ body {
 
 .nav-link {
     transition: 250ms ease-in-out;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    gap: 1em;
 }
