@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
 
 # Create your models here.
 
@@ -8,7 +9,7 @@ class Hafalan(models.Model):
     surat = models.CharField(max_length=75)
     ayat_start = models.IntegerField(default=0)
     ayat_end = models.IntegerField(default=1) 
-    date = models.DateTimeField(blank=True, null=True)
+    date = models.DateTimeField(blank=False, null=False, default=datetime.now())
 
     def total_ayat(self):
         return self.ayat_end - self.ayat_start
