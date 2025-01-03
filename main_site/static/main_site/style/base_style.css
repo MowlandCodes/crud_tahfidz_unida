@@ -17,6 +17,13 @@
     padding: 0;
 }
 
+h1 {
+    color: var(--secondary-clr);
+    margin-bottom: 1em;
+    border-bottom: 3px solid #f2f2f2;
+    padding-bottom: .4em;
+}
+
 html {
     line-height: 1.5rem;
     scroll-behavior: smooth;

@@ -22,13 +22,13 @@
                         <i class='bx bxs-chevrons-right'></i>
                     </button>
                 </li>
-                <li class="active">
+                <li {% if request.path == '/dashboard' %} class="active" {% endif %}>
                     <a href="/dashboard">
                         <i class='bx bxs-dashboard'></i>
                         <span class="nav-link">Dashboard</span>
                     </a>
                 </li>
-                <li>
+                <li {% if request.path == '/hafalan' %} class="active" {% endif %}>
                     <a href="/hafalan">
                         <i class='bx bxs-edit-alt'></i>
                         <span class="nav-link">Hafalan</span>
