@@ -39,6 +39,8 @@ def dashboard(request):
         previous_year = (now - timedelta(days=30)).year
 
         weeks = [f"Week-{i}" for i in range(1, 6)]
+        months = [f"{datetime(current_year, i, 1).strftime('%B')}" for i in range(1, 13)]
+        monthly_data = {month : 0 for month in months}
 
         current_data = {week: 0 for week in weeks}
         previous_data = {week: 0 for week in weeks}
@@ -69,6 +71,20 @@ def dashboard(request):
             .annotate(total_memorized=Sum("ayat_end") - Sum("ayat_start") + Sum(1))
             .order_by("month", "week")
         )
+
+        hafalan_data_tahunan = (
+            hafalan_user.filter(
+                date__year=current_year
+            ).annotate(
+                month=F('date__month')
+            ).values('month').annotate(
+                total_memorized=Sum('ayat_end') - Sum('ayat_start') + Sum(1)
+            ).order_by('month')
+        )
+
+        for entry in hafalan_data_tahunan:
+            month_name = datetime(current_year, entry['month'], 1).strftime('%B')
+            monthly_data[month_name] = entry['total_memorized']
 
 
         for entry in hafalan_data_mingguan:
@@ -105,10 +121,23 @@ def dashboard(request):
             ],
         }
 
+        chart_data_tahunan = {
+            'labels': months,
+            'datasets': [
+                {
+                    'label': 'Jumlah Hafalan Per-Bulan',
+                    'data': list(monthly_data.values()),
+                    'backgroundColor': 'rgba(75, 192, 192, 0.8)',
+                    'borderColor': 'rgba(75, 192, 192, 1)',
+                    'borderWidth': 2
+                }
+            ]
+        }
+
         return render(
             request,
             "main_site/dashboard.html",
-            {"chart_data": chart_data},
+            {"chart_data": chart_data, "chart_data_tahunan": chart_data_tahunan},
         )
 
     elif (
