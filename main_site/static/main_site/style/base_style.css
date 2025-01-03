@@ -126,6 +126,7 @@ body {
 
 .hidden {
     visibility: hidden;
+    opacity: 0;
 }
 
 .nav-link {
@@ -147,6 +148,7 @@ main {
     display: flex;
     flex-direction: column;
     gap: .5em;
+    transition: 250ms ease-in-out;
 }
 
 .profile span.user-name {

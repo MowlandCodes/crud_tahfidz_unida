@@ -1,5 +1,9 @@
 h1 {
     color: #3e7b27;
+    margin-bottom: 1em;
+    border-bottom: 3px solid #f2f2f2;
+    padding-bottom: 0.4em;
+    cursor: pointer;
 }
 .hafalan-table {
     width: 100%;
