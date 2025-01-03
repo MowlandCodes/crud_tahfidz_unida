@@ -8,20 +8,22 @@ from django.db.models import Case, F, Q, Sum, Value, When
 from django.middleware.csrf import get_token
 from django.shortcuts import redirect, render
 from django_ratelimit.decorators import ratelimit
+from django.contrib.auth.decorators import login_required
 
 # Import the database model to display on the dashboard
 from .models import Hafalan
 
 
 # Create your views here.
-def index(request):
+def index(_):
     return redirect("/login")
 
 
-def admin_login(request):  # Redirecting to login page
+def admin_login(_):  # Redirecting to login page
     return redirect("/login")
 
 
+@login_required
 def dashboard(request):
     if request.user.is_authenticated and not (
         request.user.is_staff or request.user.is_superuser
@@ -150,9 +152,7 @@ def dashboard(request):
 @ratelimit(key="user_or_ip", rate="7/m", block=True)
 def login_page(request):
     csrf_token = get_token(request)
-    if (
-        request.user.is_authenticated
-    ):  # Preventing the user to touch login page after successfully logged in
+    if request.user.is_authenticated:  # Preventing the user to touch login page after successfully logged in
         return redirect("/dashboard")
 
     if request.method == "POST":
@@ -184,13 +184,13 @@ def signup(request):
     return render(request, "main_site/signup.html", {})
 
 
+@login_required
 def hafalan(request):
     current_user = request.user
     
-    hafalan_user = Hafalan.objects.filter(user=current_user)
+    hafalan_user = Hafalan.objects.filter(user=current_user).order_by('-date')
 
-    return render(request, "main_site/hafalan.html", {})
-
+    return render(request, "main_site/hafalan.html", { 'hafalan_data' : hafalan_user })
 
 def logout_view(request):
     logout(request)
