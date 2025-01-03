@@ -130,7 +130,7 @@ class Hafalan(models.Model):
     date = models.DateTimeField(blank=False, null=False, default=datetime.now())
 
     def total_ayat(self):
-        return self.ayat_end - self.ayat_start
+        return self.ayat_end - self.ayat_start + 1
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name} ------------> {self.surat} : {self.ayat_start} - {self.ayat_end}"

@@ -4,17 +4,11 @@
 {% block content %}
     <link href="{% static 'main_site/style/dashboard.css' %}" rel="stylesheet">
     <script>
-        const label_mingguan = {{ weekly_labels|safe }};
-        const data_mingguan = {{ weekly_data|safe }};
-        const label_bulanan = {{ monthly_labels|safe }};
-        const data_bulanan = {{ monthly_data|safe }};
+        const chart_data = {{ chart_data | safe }};
     </script>
 
-    <div class="setoran-perminggu">
-        <canvas class="chart-setoran-perminggu" id="chart-setoran-mingguan" role="img"></canvas>
-    </div>
-    <div class="setoran-perbulan">
-        <canvas class="chart-setoran-perbulan" id="chart-setoran-bulanan" role="img"></canvas>
+    <div class="tahfidz-chart">
+        <canvas class="tahfidz-chart-bar" id="chart_tahfidz" role="img" height="600"></canvas>
     </div>
 
     <script src="{% static 'main_site/script/dashboard.js' %}" defer></script>
