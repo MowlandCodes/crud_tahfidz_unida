@@ -188,7 +188,7 @@ def signup(request):
 
 
 def hafalan(request):
-    return render(request, "main_site/crud_hafalan.html", {})
+    return render(request, "main_site/hafalan.html", {})
 
 
 def logout_view(request):
