@@ -125,7 +125,7 @@ def dashboard(request):
             'labels': months,
             'datasets': [
                 {
-                    'label': 'Jumlah Hafalan Per-Bulan',
+                    'label': 'Jumlah Setoran (ayat)',
                     'data': list(monthly_data.values()),
                     'backgroundColor': 'rgba(75, 192, 192, 0.8)',
                     'borderColor': 'rgba(75, 192, 192, 1)',
