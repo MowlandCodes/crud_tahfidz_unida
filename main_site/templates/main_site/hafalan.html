@@ -5,11 +5,15 @@
 
 {% block content %}
 <link href="{% static 'main_site/style/hafalan.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="{% static 'main_site/script/hafalan.js' %}" defer></script>
 
 <h1>Data Hafalan Mahasiswa</h1>
 <br>
 <h2>Semua Hafalan</h2>
-<table class="hafalan-table">
+<table class="hafalan-table" id="hafalan-table">
     <thead>
         <tr>
             <th>Nama Lengkap</th>
@@ -28,11 +32,6 @@
                 <td>{{ hafalan.ayat_start }}</td>
                 <td>{{ hafalan.ayat_end }}</td>
                 <td>{{ hafalan.date }}</td>
-                <!-- <td></td> -->
-            </tr>
-        {% empty %}
-            <tr>
-                <td colspan="6">Belum ada hafalan</td>
             </tr>
         {% endfor %}
     </tbody>

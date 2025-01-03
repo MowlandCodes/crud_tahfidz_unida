@@ -41,6 +41,17 @@
                     </a>
                 </li>
             </ul>            
+            <div class="profile">
+                <i class='bx bxs-user-circle profile-icon'></i>
+                <span class="name">
+                    Currently logged in as<br>
+                    {% if user.is_authenticated %}
+                        <span class="user-name">{{ user.first_name }} {{ user.last_name }}</span>
+                    {%else%}
+                        <span class="user-name">Anonymous</span>
+                    {% endif %}
+                </span>
+            </div>
         </nav>
 
         <main>

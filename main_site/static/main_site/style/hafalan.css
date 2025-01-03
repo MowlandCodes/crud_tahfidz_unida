@@ -1,26 +1,31 @@
+h1 {
+    color: #3e7b27;
+}
 .hafalan-table {
     width: 100%;
     border-collapse: collapse;
     border: 2px solid #ddd;
-    margin-top: 10px;
-    border-radius: 10px;
     overflow: hidden;
 }
 
-th, td {
+.hafalan-table.dataTable th, .hafalan-table.dataTable td {
     padding: 10px;
     text-align: center;
     border: 1px solid #ddd;
 }
 
-th {
+.dataTable th {
     background-color: #f2f2f2;
 }
 
-tr:nth-child(even) {
+.dataTable tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-tr:nth-child(odd) {
+.dataTable tr:nth-child(odd) {
     background-color: #fff;
+}
+
+.dataTables_filter {
+    margin-bottom: 1em;
 }
