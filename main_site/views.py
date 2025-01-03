@@ -186,11 +186,18 @@ def signup(request):
 
 @login_required
 def hafalan(request):
-    current_user = request.user
-    
-    hafalan_user = Hafalan.objects.filter(user=current_user).order_by('-date')
+    if request.user.is_authenticated and not (request.user.is_staff or request.user.is_superuser): # To ensure that the Staff user can't access the student's page
+        current_user = request.user
+        
+        hafalan_user = Hafalan.objects.filter(user=current_user).order_by('-date')
 
-    return render(request, "main_site/hafalan.html", { 'hafalan_data' : hafalan_user })
+        return render(request, "main_site/hafalan.html", { 'hafalan_data' : hafalan_user })
+
+    elif request.user.is_staff or request.user.is_superuser:
+        return redirect("/admin")
+
+    else:
+        return redirect("/login")
 
 def logout_view(request):
     logout(request)
