@@ -1,13 +1,10 @@
 import calendar
 import datetime
-import json  # To dump data into json format
 from datetime import datetime, timedelta
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
 from django.db.models import Case, F, Q, Sum, Value, When
-from django.db.models.functions import ExtractMonth, ExtractWeek, ExtractYear
 from django.middleware.csrf import get_token
 from django.shortcuts import redirect, render
 from django_ratelimit.decorators import ratelimit
@@ -188,6 +185,10 @@ def signup(request):
 
 
 def hafalan(request):
+    current_user = request.user
+    
+    hafalan_user = Hafalan.objects.filter(user=current_user)
+
     return render(request, "main_site/hafalan.html", {})
 
 

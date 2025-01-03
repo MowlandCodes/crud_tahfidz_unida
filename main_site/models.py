@@ -129,6 +129,9 @@ class Hafalan(models.Model):
     ayat_end = models.IntegerField(default=1)
     date = models.DateTimeField(blank=False, null=False, default=datetime.now())
 
+    def get_full_name(self):
+        return f"{self.user.first_name} {self.user.last_name}"
+
     def total_ayat(self):
         return self.ayat_end - self.ayat_start + 1
 
