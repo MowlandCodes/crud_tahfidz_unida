@@ -15,6 +15,5 @@ $(document).ready(function() {
             infoEmpty: "Tidak ada hafalan",
             zeroRecords: "Tidak ada hafalan yang sesuai",
         },
-        buttons: ['copy', 'excel', 'pdf']
     });
 });
