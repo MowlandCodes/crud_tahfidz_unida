@@ -9,6 +9,33 @@
 <h1>Data Hafalan Mahasiswa</h1>
 <br>
 <h2>Semua Hafalan</h2>
-
+<table class="hafalan-table">
+    <thead>
+        <tr>
+            <th>Nama Lengkap</th>
+            <th>Surah</th>
+            <th>Awal Setoran (ayat)</th>
+            <th>Akhir Setoran (ayat)</th>
+            <th>Tanggal Setoran</th>
+            <!-- <th>Waktu Setoran</th> -->
+        </tr>
+    </thead>
+    <tbody>
+        {% for hafalan in hafalan_data %}
+            <tr>
+                <td>{{ hafalan.get_full_name }}</td>
+                <td>{{ hafalan.surat }}</td>
+                <td>{{ hafalan.ayat_start }}</td>
+                <td>{{ hafalan.ayat_end }}</td>
+                <td>{{ hafalan.date }}</td>
+                <!-- <td></td> -->
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="6">Belum ada hafalan</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 {% endblock %}
