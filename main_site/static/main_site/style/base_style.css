@@ -132,6 +132,8 @@ body {
 main {
     display: flex;
     flex-direction: column;
-    padding: 1em;
+    padding: 3.5em;
     gap: 1em;
+    color: #1b2f3c;
+    overflow: hidden;
 }

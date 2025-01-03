@@ -81,9 +81,6 @@ def dashboard(request):
             elif month == previous_month and year == previous_year:
                 previous_data[week] = total_memorized
 
-        print(current_data)
-        print(previous_data)
-
         chart_data = {
             "labels": weeks,
             "datasets": [
