@@ -10,6 +10,7 @@ from django.shortcuts import redirect, render
 from django_ratelimit.decorators import ratelimit
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.mail import EmailMessage
 
 # Import the database model to display on the dashboard
 from .models import Hafalan
