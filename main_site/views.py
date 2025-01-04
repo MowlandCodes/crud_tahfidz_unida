@@ -13,7 +13,6 @@ from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from django.urls import reverse
 from email.utils import formataddr
-from django.utils.timezone import now
 
 # Import the database model to display on the dashboard
 from .models import Hafalan, PasswordResetToken
@@ -144,10 +143,8 @@ def dashboard(request):
             {"chart_data": chart_data, "chart_data_tahunan": chart_data_tahunan},
         )
 
-    elif (
-        request.user.is_staff or request.user.is_superuser
-    ):  # Preventing admin to touch user Dashboard page
-        return redirect("admin_login")
+    elif request.user.is_authenticated and ( request.user.is_staff or request.user.is_superuser ):  # Preventing admin to touch user Dashboard page
+        return redirect("/admin")
 
     else:
         return redirect("login_page")
@@ -206,11 +203,11 @@ def logout_view(request):
 
 def send_reset_link(request, email):
     try:
-        reset_request, is_created = PasswordResetToken.objects.get_or_create(email=email)
-        if not is_created:
+        current_user = User.objects.get(email=email)
+        reset_request, is_created = PasswordResetToken.objects.get_or_create(user=current_user)
+        if is_created:
             reset_request.save()
 
-        current_user = User.objects.filter(user=request.user)
         reset_link = f"{request.scheme}://{request.get_host()}/reset-password/{reset_request.token}/{current_user.uuid}"
         sender = formataddr(("Staff Tahfidz UNIDA", "tahfidz@unida.gontor.ac.id"))
         
@@ -218,7 +215,7 @@ def send_reset_link(request, email):
             subject="Reset Password",
             body=f"Click the link below to reset your password: {reset_link}",
             from_email=sender,
-            to=[user_email.email],
+            to=[current_user.email],
         )
 
         email_content.send()
@@ -226,7 +223,7 @@ def send_reset_link(request, email):
         return redirect("login_page")
 
     except (User.DoesNotExist, Exception):
-        messages.error(request, "Email address not found")
+        messages.error(request, "Error on creating reset password link")
         return redirect("login_page")
 
 def forgot_password(request):
@@ -235,7 +232,6 @@ def forgot_password(request):
         try:
             _ = User.objects.get(email=email)
             link = reverse("reset_link", kwargs={"email": email})
-            print(link)
             return redirect(link)
         except Exception:
             messages.error(request, "User with this email address does not exist")
@@ -247,10 +243,10 @@ def forgot_password(request):
 def reset_password(request, token, uuid):
     try:
         current_user = User.objects.get(uuid=uuid)
-        reset_request = PasswordResetToken.objects.get(user=current_user, token=token, expires_at__gte=now())
+        reset_request = PasswordResetToken.objects.get(user=current_user, token=token, expires_at__gte=datetime.now())
 
     except (User.DoesNotExist, PasswordResetToken.DoesNotExist, Exception):
-        messages.error(request, "Invalid reset link")
+        messages.error(request, "Invalid token or expired token")
         return redirect("login_page")
 
     if request.method == "POST":
@@ -259,7 +255,7 @@ def reset_password(request, token, uuid):
 
         if new_password == confirm_password:
             user = User.objects.get(uuid=uuid)
-            user.set_password(password)
+            user.set_password(new_password)
             user.save()
             reset_request.delete() # Delete the reset token
             messages.success(request, "Password has been reset successfully")
@@ -269,4 +265,3 @@ def reset_password(request, token, uuid):
 
     else:
         return render(request, "main_site/reset-password.html", {"token": token, "uuid": uuid})
-

@@ -142,14 +142,14 @@ class Hafalan(models.Model):
 
 class PasswordResetToken(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="reset_token")
-    token = models.CharField(max_length=64, unique=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    expires_at = models.DateTimeField()
+    token = models.CharField(default=secrets.token_hex(32), max_length=64, unique=True)
+    created_at = models.DateTimeField(default=datetime.now(), blank=False, null=False)
+    expires_at = models.DateTimeField(default=datetime.now() + timedelta(minutes=30), blank=False, null=False)
 
     def save(self, *args, **kwargs):
         if not self.token:
             self.token = secrets.token_hex(32)
         if not self.expires_at:
-            self.expires_at = datetime.now() + timedelta(minutes=10) # Token expires in 10 minutes
+            self.expires_at = datetime.now() + timedelta(minutes=30) # Token expires in 10 minutes
 
         super().save(*args, **kwargs)

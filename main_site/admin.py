@@ -26,6 +26,7 @@ class HafalanAdmin(admin.ModelAdmin):
 
     name.short_description = "Full Name"
 
+
 # Change the admin site header, title, and index title
 admin.site.site_header = text("Tahfidz CRUD Dashboard")
 admin.site.site_title = text("Tahfidz CRUD")
