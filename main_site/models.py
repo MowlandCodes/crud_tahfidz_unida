@@ -2,7 +2,6 @@ from datetime import datetime, timedelta
 from django.contrib.auth.models import User
 from django.db import models
 
-import uuid
 import secrets
 
 # Create your models here.
