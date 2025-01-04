@@ -11,6 +11,7 @@ from django_ratelimit.decorators import ratelimit
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
+from django.urls import reverse
 
 # Import the database model to display on the dashboard
 from .models import Hafalan
@@ -18,11 +19,11 @@ from .models import Hafalan
 
 # Create your views here.
 def index(_):
-    return redirect("/login")
+    return redirect("login_page")
 
 
 def admin_login(_):  # Redirecting to login page
-    return redirect("/login")
+    return redirect("login_page")
 
 
 @login_required
@@ -144,10 +145,10 @@ def dashboard(request):
     elif (
         request.user.is_staff or request.user.is_superuser
     ):  # Preventing admin to touch user Dashboard page
-        return redirect("/admin")
+        return redirect("admin_login")
 
     else:
-        return redirect("/login")
+        return redirect("login_page")
 
 
 # Limiting login attempts to prevent Brute Force Attack
@@ -155,7 +156,7 @@ def dashboard(request):
 def login_page(request):
     csrf_token = get_token(request)
     if request.user.is_authenticated:  # Preventing the user to touch login page after successfully logged in
-        return redirect("/dashboard")
+        return redirect("dashboard")
 
     if request.method == "POST":
         username = request.POST["username"]
@@ -166,7 +167,7 @@ def login_page(request):
         if user is not None:
             login(request, user)
             if request.user.is_staff:  # Check if user is a staff or a Super User
-                return redirect("/admin")
+                return redirect("admin_login")
             else:
                 if remember == "True":  # If remember is checked, set remember to True
                     request.session.set_expiry(
@@ -175,7 +176,7 @@ def login_page(request):
                 else:
                     request.session.set_expiry(0)  # Expire when the browser is closed
 
-                return redirect("/dashboard")  # Page for Students
+                return redirect("dashboard")  # Page for Students
         else:
             messages.error(request, "Invalid username or password")
 
@@ -192,29 +193,66 @@ def hafalan(request):
         return render(request, "main_site/hafalan.html", { 'hafalan_data' : hafalan_user })
 
     elif request.user.is_staff or request.user.is_superuser:
-        return redirect("/admin")
+        return redirect("admin_login")
 
     else:
-        return redirect("/login")
+        return redirect("login_page")
 
 def logout_view(request):
     logout(request)
-    return redirect("/login")
+    return redirect("login_page")
 
 def send_reset_link(request, email):
-    return
+    try:
+        user_email = User.objects.get(email=email)
+        reset_link = f"{request.scheme}://{request.get_host()}:8000/reset-password/{user_email.uuid}" # Temporary link for Development Stage
+        
+        email_content = EmailMessage(
+            subject="Reset Password",
+            body=f"Click the link below to reset your password: {reset_link}",
+            from_email="tahfidz@unida.gontor.ac.id",
+            to=[user_email],
+        )
+
+        email_content.send()
+        messages.success(request, "Reset password link has been sent to your email address")
+        return redirect("login_page")
+
+    except User.DoesNotExist:
+        messages.error(request, "Email address not found")
+        return redirect("login_page")
+
+    except Exception as e:
+        messages.error(request, e)
+        return redirect("login_page")
 
 def forgot_password(request):
     if request.method == "POST":
         email = request.POST["email"]
         try:
             _ = User.objects.get(email=email)
-            messages.success(request, "Password reset link sent to your email")
+            link = reverse("reset_link", kwargs={"email": email})
+            return redirect(link)
         except Exception as e:
-            messages.error(request, "Invalid email address")
-            return redirect("/forgot-password")
-
-        return redirect("/login")
+            messages.error(request, e)
+            return redirect("forgot_password")
 
     return render(request, "main_site/forgot-password.html", {})
+
+
+def reset_password(request, uuid):
+    if request.method == "POST":
+        password = request.POST["password"]
+        confirm_password = request.POST["confirm_password"]
+
+        if password == confirm_password:
+            user = User.objects.get(uuid=uuid)
+            user.set_password(password)
+            user.save()
+            return redirect("login_page")
+        else:
+            messages.error(request, "Password and confirm password do not match")
+
+    else:
+        return render(request, "main_site/reset-password.html", {})
 
