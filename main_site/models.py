@@ -1,7 +1,9 @@
-from datetime import datetime
-
+from datetime import datetime, timedelta
 from django.contrib.auth.models import User
 from django.db import models
+
+import uuid
+import secrets
 
 # Create your models here.
 SURAHS = [
@@ -137,3 +139,18 @@ class Hafalan(models.Model):
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name} ------------> {self.surat} : {self.ayat_start} - {self.ayat_end}"
+
+
+class PasswordResetToken(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="reset_token")
+    token = models.CharField(max_length=64, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField()
+
+    def save(self, *args, **kwargs):
+        if not self.token:
+            self.token = secrets.token_hex(32)
+        if not self.expires_at:
+            self.expires_at = datetime.now() + timedelta(minutes=10) # Token expires in 10 minutes
+
+        super().save(*args, **kwargs)
