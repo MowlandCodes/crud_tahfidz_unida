@@ -182,10 +182,6 @@ def login_page(request):
     return render(request, "main_site/login.html", {"csrf_token": csrf_token})
 
 
-def signup(request):
-    return render(request, "main_site/signup.html", {})
-
-
 @login_required
 def hafalan(request):
     if request.user.is_authenticated and not (request.user.is_staff or request.user.is_superuser): # To ensure that the Staff user can't access the student's page
@@ -204,6 +200,9 @@ def hafalan(request):
 def logout_view(request):
     logout(request)
     return redirect("/login")
+
+def send_reset_link(request, email):
+    return
 
 def forgot_password(request):
     if request.method == "POST":
