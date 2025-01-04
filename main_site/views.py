@@ -203,6 +203,3 @@ def logout_view(request):
     logout(request)
     return redirect("/login")
 
-def register(request):
-    return render(request, "main_site/register.html", {})
-
