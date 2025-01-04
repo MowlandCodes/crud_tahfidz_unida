@@ -13,9 +13,10 @@ from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from django.urls import reverse
 from email.utils import formataddr
+from django.utils.timezone import now
 
 # Import the database model to display on the dashboard
-from .models import Hafalan
+from .models import Hafalan, PasswordResetToken
 
 
 # Create your views here.
@@ -205,8 +206,12 @@ def logout_view(request):
 
 def send_reset_link(request, email):
     try:
-        user_email = User.objects.get(email=email)
-        reset_link = f"{request.scheme}://{request.get_host()}/reset-password/{user_email.uuid}"
+        reset_request, is_created = PasswordResetToken.objects.get_or_create(email=email)
+        if not is_created:
+            reset_request.save()
+
+        current_user = User.objects.filter(user=request.user)
+        reset_link = f"{request.scheme}://{request.get_host()}/reset-password/{reset_request.token}/{current_user.uuid}"
         sender = formataddr(("Staff Tahfidz UNIDA", "tahfidz@unida.gontor.ac.id"))
         
         email_content = EmailMessage(
@@ -220,7 +225,7 @@ def send_reset_link(request, email):
         messages.success(request, "Reset password link has been sent to your email address")
         return redirect("login_page")
 
-    except User.DoesNotExist or Exception:
+    except (User.DoesNotExist, Exception):
         messages.error(request, "Email address not found")
         return redirect("login_page")
 
@@ -239,20 +244,29 @@ def forgot_password(request):
     return render(request, "main_site/forgot-password.html", {})
 
 
-def reset_password(request, uuid):
+def reset_password(request, token, uuid):
+    try:
+        current_user = User.objects.get(uuid=uuid)
+        reset_request = PasswordResetToken.objects.get(user=current_user, token=token, expires_at__gte=now())
+
+    except (User.DoesNotExist, PasswordResetToken.DoesNotExist, Exception):
+        messages.error(request, "Invalid reset link")
+        return redirect("login_page")
+
     if request.method == "POST":
-        password = request.POST["password"]
+        new_password = request.POST["password"]
         confirm_password = request.POST["password_confirm"]
 
-        if password == confirm_password:
+        if new_password == confirm_password:
             user = User.objects.get(uuid=uuid)
             user.set_password(password)
             user.save()
+            reset_request.delete() # Delete the reset token
             messages.success(request, "Password has been reset successfully")
             return redirect("login_page")
         else:
             messages.error(request, "Password and confirm password do not match")
 
     else:
-        return render(request, "main_site/reset-password.html", {})
+        return render(request, "main_site/reset-password.html", {"token": token, "uuid": uuid})
 
