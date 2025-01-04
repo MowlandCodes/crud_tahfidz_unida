@@ -203,3 +203,6 @@ def logout_view(request):
     logout(request)
     return redirect("/login")
 
+def forgot_password(request):
+    return render(request, "main_site/forgot-password.html", {})
+

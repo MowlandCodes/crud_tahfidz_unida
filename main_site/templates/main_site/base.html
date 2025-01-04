@@ -1,63 +1,66 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %}Dashboard{% endblock %}</title>
-        <link href="{% static 'main_site/style/base_style.css' %}" rel="stylesheet">
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-        <link rel="apple-touch-icon" sizes="180x180" href="{% static 'main_site/img/apple-touch-icon.png' %}">
-        <link rel="icon" type="image/png" sizes="32x32" href="{% static 'main_site/img/favicon-32x32.png' %}">
-        <link rel="icon" type="image/png" sizes="16x16" href="{% static 'main_site/img/favicon-16x16.png' %}">
-        <link rel="manifest" href="{% static 'main_site/img/site.webmanifest' %}">
-        <script src="{% static 'main_site/script/base.js' %}" defer></script>
-    </head>
-    <body>
-        <nav class="sidebar">
-            <ul>
-                <li>
-                    <img src="{% static 'main_site/img/unida_outline.png' %}" alt="logo-unida" class="logo-unida">
-                    <button id="toggle-btn" onclick=toggle_sidebar(this)>
-                        <i class='bx bxs-chevrons-right'></i>
-                    </button>
-                </li>
-                <li {% if request.path == '/dashboard' %} class="active" {% endif %}>
-                    <a href="/dashboard">
-                        <i class='bx bxs-dashboard'></i>
-                        <span class="nav-link">Dashboard</span>
-                    </a>
-                </li>
-                <li {% if request.path == '/hafalan' %} class="active" {% endif %}>
-                    <a href="/hafalan">
-                        <i class='bx bxs-edit-alt'></i>
-                        <span class="nav-link">Hafalan</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'logout_view' %}">
-                        <i class='bx bxs-log-out'></i>
-                        <span class="nav-link">Logout</span>
-                    </a>
-                </li>
-            </ul>            
-            <div class="profile">
-                <i class='bx bxs-user-circle profile-icon'></i>
-                <span class="name">
-                    Login Sebagai<br>
-                    {% if user.is_authenticated %}
-                        <span class="user-name">{{ user.first_name }} {{ user.last_name }}</span>
-                    {%else%}
-                        <span class="user-name">Anonymous</span>
-                    {% endif %}
-                </span>
-            </div>
-        </nav>
 
-        <main>
-            {% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Dashboard{% endblock %}</title>
+    <link href="{% static 'main_site/style/base_style.css' %}" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'main_site/img/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'main_site/img/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'main_site/img/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'main_site/img/site.webmanifest' %}">
+    <script src="{% static 'main_site/script/base.js' %}" defer></script>
+</head>
 
-            {% endblock %}
-        </main>
-    </body>
+<body>
+    <nav class="sidebar">
+        <ul>
+            <li>
+                <img src="{% static 'main_site/img/unida_outline.png' %}" alt="logo-unida" class="logo-unida">
+                <button id="toggle-btn" onclick=toggle_sidebar(this)>
+                    <i class='bx bxs-chevrons-right'></i>
+                </button>
+            </li>
+            <li {% if request.path=='/dashboard' %} class="active" {% endif %}>
+                <a href="{% url 'dashboard' %}">
+                    <i class='bx bxs-dashboard'></i>
+                    <span class="nav-link">Dashboard</span>
+                </a>
+            </li>
+            <li {% if request.path=='/hafalan' %} class="active" {% endif %}>
+                <a href="{% url 'hafalan' %}">
+                    <i class='bx bxs-edit-alt'></i>
+                    <span class="nav-link">Hafalan</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'logout_view' %}">
+                    <i class='bx bxs-log-out'></i>
+                    <span class="nav-link">Logout</span>
+                </a>
+            </li>
+        </ul>
+        <div class="profile">
+            <i class='bx bxs-user-circle profile-icon'></i>
+            <span class="name">
+                Login Sebagai<br>
+                {% if user.is_authenticated %}
+                <span class="user-name">{{ user.first_name }} {{ user.last_name }}</span>
+                {%else%}
+                <span class="user-name">Anonymous</span>
+                {% endif %}
+            </span>
+        </div>
+    </nav>
+
+    <main>
+        {% block content %}
+
+        {% endblock %}
+    </main>
+</body>
+
 </html>

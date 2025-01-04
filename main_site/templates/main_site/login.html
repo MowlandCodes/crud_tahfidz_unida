@@ -18,37 +18,37 @@
             {% csrf_token %}
             <h1>{% block form-title %}Tahfidz Login{% endblock %}</h1>
             {% block form-content %}
-                <div class="input-box">
-                    <input type="text" name="username" value="" placeholder="Username" required>
-                    <i class='bx bx-user'></i>
-                </div>
-                <div class="input-box">
-                    <input type="password" name="password" value="" placeholder="Password" required>
-                    <i class='bx bx-lock-alt'></i>
-                </div>
+            <div class="input-box">
+                <input type="text" name="username" value="" placeholder="Username" required>
+                <i class='bx bx-user'></i>
+            </div>
+            <div class="input-box">
+                <input type="password" name="password" value="" placeholder="Password" required>
+                <i class='bx bx-lock-alt'></i>
+            </div>
 
-                <div class="remember-forgot">
-                    <div class="remember-check-box">
-                        <input type="checkbox" name="remember" value="True" id="remember">
-                        <label for="remember">Remember me</label>
-                    </div>
-                    <a href="#">Forgot Password?</a>
+            <div class="remember-forgot">
+                <div class="remember-check-box">
+                    <input type="checkbox" name="remember" value="True" id="remember">
+                    <label for="remember">Remember me</label>
                 </div>
+                <a href="{% url "forgot_password" %}">Forgot Password?</a>
+            </div>
             {% endblock %}
 
-            {%if messages%} 
-                {% for message in messages %} 
-                    <div class="alert-error">
-                        <i class='bx bx-shield-x' style="font-size:20px; margin-right:8px"></i>
-                        <span>{{message}}</span>
-                    </div> 
-                {% endfor %} 
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert-error">
+                <i class='bx bx-shield-x' style="font-size:20px; margin-right:8px"></i>
+                <span>{{message}}</span>
+            </div>
+            {% endfor %}
             {% endif %}
 
             <button type="submit" class="btn">{% block button-title %}Login{% endblock %}</button>
             <div class="login-register">
                 {% block login-register %}
-                    <p>Don't have an account? <a href="/signup">Register</a></p>
+                <p>Don't have an account? <a href="{% url 'signup'%}">Register</a></p>
                 {% endblock %}
             </div>
         </form>
