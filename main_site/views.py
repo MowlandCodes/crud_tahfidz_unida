@@ -29,10 +29,7 @@ def admin_login(_):  # Redirecting to login page
 
 @login_required
 def dashboard(request):
-    if request.user.is_authenticated and not (
-        request.user.is_staff or request.user.is_superuser
-    ):  # Allow only authenticated user to access dashboard and Not admin or staff
-
+    if request.user.is_authenticated and not ( request.user.is_staff or request.user.is_superuser ):  # Allow only authenticated user to access dashboard and Not admin or staff
         current_user = request.user
 
         now = datetime.now()
