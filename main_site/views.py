@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from django.urls import reverse
+from email.utils import formataddr
 
 # Import the database model to display on the dashboard
 from .models import Hafalan
@@ -205,25 +206,22 @@ def logout_view(request):
 def send_reset_link(request, email):
     try:
         user_email = User.objects.get(email=email)
-        reset_link = f"{request.scheme}://{request.get_host()}:8000/reset-password/{user_email.uuid}" # Temporary link for Development Stage
+        reset_link = f"{request.scheme}://{request.get_host()}/reset-password/{user_email.uuid}"
+        sender = formataddr(("Staff Tahfidz UNIDA", "tahfidz@unida.gontor.ac.id"))
         
         email_content = EmailMessage(
             subject="Reset Password",
             body=f"Click the link below to reset your password: {reset_link}",
-            from_email="tahfidz@unida.gontor.ac.id",
-            to=[user_email],
+            from_email=sender,
+            to=[user_email.email],
         )
 
         email_content.send()
         messages.success(request, "Reset password link has been sent to your email address")
         return redirect("login_page")
 
-    except User.DoesNotExist:
+    except User.DoesNotExist or Exception:
         messages.error(request, "Email address not found")
-        return redirect("login_page")
-
-    except Exception as e:
-        messages.error(request, e)
         return redirect("login_page")
 
 def forgot_password(request):
@@ -232,9 +230,10 @@ def forgot_password(request):
         try:
             _ = User.objects.get(email=email)
             link = reverse("reset_link", kwargs={"email": email})
+            print(link)
             return redirect(link)
-        except Exception as e:
-            messages.error(request, e)
+        except Exception:
+            messages.error(request, "User with this email address does not exist")
             return redirect("forgot_password")
 
     return render(request, "main_site/forgot-password.html", {})
@@ -243,12 +242,13 @@ def forgot_password(request):
 def reset_password(request, uuid):
     if request.method == "POST":
         password = request.POST["password"]
-        confirm_password = request.POST["confirm_password"]
+        confirm_password = request.POST["password_confirm"]
 
         if password == confirm_password:
             user = User.objects.get(uuid=uuid)
             user.set_password(password)
             user.save()
+            messages.success(request, "Password has been reset successfully")
             return redirect("login_page")
         else:
             messages.error(request, "Password and confirm password do not match")
