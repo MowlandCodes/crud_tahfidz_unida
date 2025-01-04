@@ -1,7 +1,8 @@
+<html>
 <h1 style="text-align: center;">🕌 Tahfidz Dashboard System 🕌</h1>
 
 ## Tech Stack
-![Static Badge](https://img.shields.io/badge/django-framework-green?style=for-the-badge&logo=django&logoColor=white&link=https%3A%2F%2Fdjangoproject.com) ![Static Badge](https://img.shields.io/badge/python-language-yellow?style=for-the-badge&logo=python&logoColor=white&link=https%3A%2F%2Fdjangoproject.com)
+[![Static Badge](https://img.shields.io/badge/django-framework-green?style=for-the-badge&logo=django&logoColor=white)](https://djangoproject.com) [![Static Badge](https://img.shields.io/badge/python-language-yellow?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 ---
 
 
@@ -59,3 +60,5 @@ python3 manage.py runserver # untuk linux
 ## Social Media 🌐
 Kalian Bisa mengakses saya melalui beberapa media sosial berikut: <br><br>
 [![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/mowland__) [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=inspire&logoColor=white)](https://linkedin.com/in/m-faridh-maulana-a3532a287) [![Medium](https://img.shields.io/badge/Medium-12100E?logo=medium&logoColor=white)](https://medium.com/@mowland-codes) 
+
+</html>
