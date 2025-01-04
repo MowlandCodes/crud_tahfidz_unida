@@ -1,8 +1,11 @@
+
 $(document).ready(function() {
+    var table = document.getElementById("hafalan-table")
+
     $("#hafalan-table").DataTable({
         responsive: true,
         paging: false,
-        searching: false,
+        searching: true,
         scrollCollapse: true,
         ordering: true,
         info: true,
@@ -16,4 +19,11 @@ $(document).ready(function() {
             zeroRecords: "Tidak ada hafalan yang sesuai",
         },
     });
+
+    $('#toogle-btn').on('click', function (){
+        setTimeout(() => {
+            $("#hafalan-table").DataTable().columns.adjust().draw();
+        }, 600);
+    });
+
 });

@@ -5,11 +5,19 @@ h1 {
     padding-bottom: 0.4em;
     cursor: pointer;
 }
-.hafalan-table {
+
+#hafalan-table_wrapper {
     width: 100%;
+    overflow-x: auto;
+}
+
+.dataTables_scrollHeadInner {
+    width: 100% !important;
+}
+
+.hafalan-table.dataTable {
     border-collapse: collapse;
-    border: 2px solid #ddd;
-    overflow: hidden;
+    width: 100% !important;
 }
 
 .hafalan-table.dataTable th, .hafalan-table.dataTable td {
