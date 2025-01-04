@@ -22,7 +22,7 @@ sudo apt update && sudo apt upgrade -y && sudo apt install python3 python3-pip -
 
 #### Windows
 
-Untuk pengguna Windows, diharapkan untuk menginstall ![Python](https://python.org/downloads), pip dan Git di komputer Anda terlebih dahulu. Pastikan untuk menggunakan Python 3.9 atau versi terbaru. Setelah menginstall, Anda dapat menjalankan perintah berikut:
+Untuk pengguna Windows, diharapkan untuk menginstall [Python](https://python.org/downloads) , pip dan Git di komputer Anda terlebih dahulu. Pastikan untuk menggunakan Python 3.9 atau versi terbaru. Setelah menginstall, Anda dapat menjalankan perintah berikut:
 
 ```powershell
 winget install --id Git.Git -e --source winget # Untuk menginstall Git
