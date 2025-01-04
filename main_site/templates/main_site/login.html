@@ -38,8 +38,9 @@
 
             {% if messages %}
             {% for message in messages %}
-            <div class="alert-error">
-                <i class='bx bx-shield-x' style="font-size:20px; margin-right:8px"></i>
+            <div class="alert-{% if message.tags %}{{ message.tags }}{% endif %}">
+                {% if message.tags == "error" %}<i class='bx bx-error-alt' style="font-size:20px; margin-right:8px"></i>{% endif %}
+                {% if message.tags == "success" %}<i class='bx bx-badge-check' style="font-size:20px; margin-right:8px"></i>{% endif %}
                 <span>{{message}}</span>
             </div>
             {% endfor %}

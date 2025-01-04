@@ -9,6 +9,7 @@ from django.middleware.csrf import get_token
 from django.shortcuts import redirect, render
 from django_ratelimit.decorators import ratelimit
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 # Import the database model to display on the dashboard
 from .models import Hafalan
@@ -204,5 +205,16 @@ def logout_view(request):
     return redirect("/login")
 
 def forgot_password(request):
+    if request.method == "POST":
+        email = request.POST["email"]
+        try:
+            _ = User.objects.get(email=email)
+            messages.success(request, "Password reset link sent to your email")
+        except Exception as e:
+            messages.error(request, "Invalid email address")
+            return redirect("/forgot-password")
+
+        return redirect("/login")
+
     return render(request, "main_site/forgot-password.html", {})
 

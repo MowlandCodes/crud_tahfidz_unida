@@ -148,3 +148,15 @@ body {
     background-color: #eea5a5;
     cursor: pointer;
 }
+
+.alert-success {
+    color: #4fab47;
+    font-size: 14px;
+    font-weight: 400;
+    margin: 5px 0;
+    border-radius: 10px;
+    border: 2px solid #4fab47;
+    padding: 10px;
+    background-color: #a9eea5;
+    cursor: pointer;
+}
