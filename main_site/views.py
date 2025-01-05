@@ -24,7 +24,7 @@ def index(_):
 
 
 def admin_login(_):  # Redirecting to login page
-    return redirect("login_page")
+    return redirect("/admin")
 
 
 @login_required
@@ -141,7 +141,7 @@ def dashboard(request):
         )
 
     elif request.user.is_authenticated and ( request.user.is_staff or request.user.is_superuser ):  # Preventing admin to touch user Dashboard page
-        return redirect("/admin")
+        return redirect("admin_login")
 
     else:
         return redirect("login_page")
