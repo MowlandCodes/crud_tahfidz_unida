@@ -28,6 +28,6 @@ class HafalanAdmin(admin.ModelAdmin):
 
 
 # Change the admin site header, title, and index title
-admin.site.site_header = text("Tahfidz CRUD Dashboard")
-admin.site.site_title = text("Tahfidz CRUD")
-admin.site.index_title = text("Tahfidz CRUD Dashboard")
+admin.site.site_header = text("Tahfidz Admin Dashboard")
+admin.site.site_title = text("Tahfidz Admin")
+admin.site.index_title = text("Admin Dashboard")
