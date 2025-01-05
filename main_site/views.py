@@ -23,8 +23,12 @@ def index(_):
     return redirect("login_page")
 
 
-def admin_login(_):  # Redirecting to login page
-    return redirect("/admin")
+def admin_login(request):  # Redirecting to login page
+    if request.user.is_authenticated and ( request.user.is_staff or request.user.is_superuser ):
+        return redirect("/admin")
+
+    else:
+        return redirect("login_page")
 
 
 @login_required
