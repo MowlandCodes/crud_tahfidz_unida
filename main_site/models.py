@@ -125,9 +125,9 @@ SURAHS = [
 
 class Hafalan(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="hafalan")
-    surat = models.CharField(max_length=75, choices=SURAHS)
-    ayat_start = models.IntegerField(default=0)
-    ayat_end = models.IntegerField(default=1)
+    surat = models.CharField(max_length=75, choices=SURAHS, blank=False, null=False)
+    ayat_start = models.IntegerField(default=0, blank=False, null=False)
+    ayat_end = models.IntegerField(default=1, blank=False, null=False)
     date = models.DateTimeField(blank=False, null=False, default=datetime.now())
 
     def get_full_name(self):
